@@ -43,7 +43,7 @@ function registrar() {
     let nombre = prompt("Ingrese el nombre de usuario:");
 
     if (nombre == null || nombre == "") {
-        console.log("El nombre de usuario es obligatorio.");
+        alert("El nombre de usuario es obligatorio.");
         return;
     }
 
@@ -51,7 +51,7 @@ function registrar() {
     for (let i = 0; i < usuarios.length; i++) {
 
         if (usuarios[i].nombre == nombre) {
-            console.log("El usuario ya se encuentra registrado.");
+            alert("El usuario ya se encuentra registrado.");
             return;
         }
     }
@@ -59,14 +59,14 @@ function registrar() {
     let clave = prompt("Ingrese la clave:");
 
     if (clave == null || clave == "") {
-        console.log("La clave es obligatoria.");
+        alert("La clave es obligatoria.");
         return;
     }
 
     let saldo = Number(prompt("Ingrese el saldo inicial:"));
 
     if (isNaN(saldo) || saldo < 0) {
-        console.log("El saldo inicial debe ser un número válido.");
+        alert("El saldo inicial debe ser un número válido.");
         return;
     }
 
@@ -83,9 +83,7 @@ function registrar() {
 
     guardarUsuarios(usuarios);
 
-    console.log("================================");
-    console.log("Usuario registrado correctamente.");
-    console.log("================================");
+    alert("Usuario registrado correctamente.");
 }
 
 
@@ -98,7 +96,7 @@ function iniciarSesion() {
     let usuarios = obtenerUsuarios();
 
     if (usuarios.length == 0) {
-        console.log("No existen usuarios registrados.");
+        alert("No existen usuarios registrados.");
         return false;
     }
 
@@ -116,13 +114,13 @@ function iniciarSesion() {
     }
 
     if (usuarioEncontrado == null) {
-        console.log("El usuario no existe.");
+        alert("El usuario no existe.");
         return false;
     }
 
     // Verificar si la cuenta está bloqueada
     if (usuarioEncontrado.bloqueado == true) {
-        console.log("Cuenta bloqueada por 24 horas, comunícate con tu banco");
+        alert("Cuenta bloqueada por 24 horas.... comunícate con tu banco...");
         return false;
     }
 
@@ -138,10 +136,9 @@ function iniciarSesion() {
             ingresoCorrecto = true;
             usuarioEncontrado.intentos = 0;
 
-            console.log("================================");
-            console.log("Inicio de sesión exitoso.");
-            console.log("Bienvenido " + usuarioEncontrado.nombre);
-            console.log("================================");
+           
+            alert("¡¡Inicio de sesión exitoso!! \nBienvenid@ " + usuarioEncontrado.nombre);
+           
 
             break;
 
@@ -149,8 +146,7 @@ function iniciarSesion() {
 
             intentos++;
 
-            console.log("Clave incorrecta.");
-            console.log("Intento " + intentos + " de 3.");
+            alert("Clave incorrecta. \nIntentos restantes: " + (3 - intentos));
 
         }
     }
@@ -163,10 +159,8 @@ function iniciarSesion() {
 
         guardarUsuarios(usuarios);
 
-        console.log("================================");
-        console.log("Cuenta bloqueada por 24 horas,");
-        console.log("comunícate con tu banco");
-        console.log("================================");
+        
+        alert("Cuenta bloqueada por 24 horas...... \nComunícate con tu banco.....");
 
         return false;
     }
@@ -191,14 +185,13 @@ function retirarDinero() {
 
     if (isNaN(monto) || monto <= 0) {
 
-        console.log("El monto debe ser un número positivo.");
+        alert("El monto debe ser un número positivo.");
         return;
     }
 
     if (monto > usuarioActual.saldo) {
 
-        console.log("No puede retirar más dinero del saldo disponible.");
-        console.log("Saldo actual: $" + usuarioActual.saldo);
+        alert("No puede retirar más dinero del saldo disponible. \nSaldo actual: $" + usuarioActual.saldo);
 
         return;
     }
@@ -225,11 +218,8 @@ function retirarDinero() {
 
     guardarUsuarios(usuarios);
 
-    console.log("================================");
-    console.log("Retiro realizado correctamente.");
-    console.log("Monto retirado: $" + monto);
-    console.log("Nuevo saldo: $" + usuarioActual.saldo);
-    console.log("================================");
+    
+    alert("Retiro realizado correctamente!! \nMonto retirado: $" + monto + "\nNuevo saldo: $" + usuarioActual.saldo);
 }
 
 
@@ -245,7 +235,7 @@ function consignarDinero() {
 
     if (isNaN(monto) || monto <= 0) {
 
-        console.log("El monto debe ser un número positivo.");
+        alert("El monto debe ser un número positivo.");
         return;
     }
 
@@ -271,11 +261,9 @@ function consignarDinero() {
 
     guardarUsuarios(usuarios);
 
-    console.log("================================");
-    console.log("Consignación realizada correctamente.");
-    console.log("Monto consignado: $" + monto);
-    console.log("Nuevo saldo: $" + usuarioActual.saldo);
-    console.log("================================");
+
+    alert("Consignación realizada correctamente!! \nMonto consignado: $" + monto + "\nNuevo saldo: $" + usuarioActual.saldo);
+    
 }
 
 
@@ -285,10 +273,7 @@ function consignarDinero() {
 
 function consultarSaldo() {
 
-    console.log("================================");
-    console.log("Usuario: " + usuarioActual.nombre);
-    console.log("Saldo actual: $" + usuarioActual.saldo);
-    console.log("================================");
+    alert("Usuario: " + usuarioActual.nombre +"\nSaldo actual: $" + usuarioActual.saldo);
 }
 
 
@@ -297,30 +282,23 @@ function consultarSaldo() {
 // ==========================================
 
 function consultarMovimientos() {
-
-    console.log("================================");
-    console.log("HISTORIAL DE MOVIMIENTOS");
-    console.log("================================");
-
     if (usuarioActual.movimientos.length == 0) {
-
-        console.log("No existen movimientos.");
-
+        alert("No existen movimientos.");
         return;
     }
 
-    for (let i = 0; i < usuarioActual.movimientos.length; i++) {
+    let lista = "---- HISTORIAL DE MOVIMIENTOS ----\n\n";
 
-        console.log("-------------------------------");
-        console.log("Fecha: " + usuarioActual.movimientos[i].fecha);
-        console.log("Tipo: " + usuarioActual.movimientos[i].tipo);
-        console.log("Monto: $" + usuarioActual.movimientos[i].monto);
+    for (let i = 0; i < usuarioActual.movimientos.length; i++) {
+        lista = lista +
+            (i + 1) + ". " +
+            "Fecha: " + usuarioActual.movimientos[i].fecha + "\n" +
+            "   Tipo: " + usuarioActual.movimientos[i].tipo + "\n" +
+            "   Monto: $" + usuarioActual.movimientos[i].monto + "\n\n";
     }
 
-    console.log("-------------------------------");
+    alert(lista);
 }
-
-
 // ==========================================
 // MENÚ PRINCIPAL
 // ==========================================
@@ -333,7 +311,7 @@ function menuPrincipal() {
 
         opcion = Number(prompt(
             "===== MI PLATA =====\n" +
-            "Bienvenido " + usuarioActual.nombre + "\n\n" +
+            "Bienvenid@ " + usuarioActual.nombre + "\n\n" +
             "1. Retirar dinero\n" +
             "2. Consultar saldo\n" +
             "3. Consignar dinero\n" +
@@ -361,12 +339,12 @@ function menuPrincipal() {
                 break;
 
             case 5:
-                console.log("Gracias por utilizar Mi Plata.");
+                alert("Gracias por utilizar Mi Plata.");
                 usuarioActual = null;
                 break;
 
             default:
-                console.log("Opción no válida.");
+                alert("Opción no válida.");
         }
     }
 }
@@ -405,11 +383,11 @@ function menuInicial() {
                 break;
 
             case 3:
-                console.log("Gracias por utilizar Mi Plata.");
+                alert("Gracias por utilizar Mi Plata.");
                 break;
 
             default:
-                console.log("Opción no válida.");
+                alert("Opción no válida.");
         }
     }
 }
